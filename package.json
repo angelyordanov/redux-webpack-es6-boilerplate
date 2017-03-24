@@ -33,7 +33,6 @@
     "postbuild": "npm run build:html",
     "build:serve": "http-server build/client -p 3003 --cors -o",
     "lint": "eslint config src/js/** --ext .js",
-    "jscs": "jscs src/js/",
     "test": "mocha --compilers js:babel-core/register,css:./test/unit/cssNullCompiler.js --require ./test/unit/testHelper.js --recursive ./test/unit",
     "test:watch": "npm run test -- --watch",
     "tunnel": "lt --port 3000"
@@ -63,7 +62,6 @@
     "file-loader": "0.9.0",
     "http-server": "0.9.0",
     "jquery": "3.1.0",
-    "jscs": "3.0.7",
     "jsdom": "9.4.5",
     "mocha": "3.0.2",
     "node-sass": "3.8.0",
