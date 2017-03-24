@@ -18,6 +18,7 @@ module.exports = merge(config, {
     application: [
       'webpack-hot-middleware/client',
       'react-hot-loader/patch',
+      'babel-polyfill',
       'js/entries/development'
     ],
     vendor: ['react', 'react-dom', 'react-redux', 'react-router', 'react-router-redux', 'redux']

@@ -16,7 +16,10 @@ const GLOBALS = {
 module.exports = merge(config, {
   devtool: 'cheap-module-source-map',
   entry: {
-    application: 'js/entries/production',
+    application: [
+      'babel-polyfill',
+      'js/entries/production',
+    ],
     vendor: ['react', 'react-dom', 'react-redux', 'react-router', 'react-router-redux', 'redux']
   },
   plugins: [
