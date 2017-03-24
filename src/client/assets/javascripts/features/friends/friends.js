@@ -1,5 +1,3 @@
-// @flow
-
 import { createStructuredSelector } from 'reselect';
 import assign from 'lodash/assign';
 
