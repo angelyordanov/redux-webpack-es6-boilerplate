@@ -4,6 +4,7 @@ const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const config = require('./webpack.config.base');
+const autoprefixer = require('autoprefixer');
 
 const GLOBALS = {
   'process.env': {
@@ -13,7 +14,6 @@ const GLOBALS = {
 };
 
 module.exports = merge(config, {
-  debug: false,
   devtool: 'cheap-module-source-map',
   entry: {
     application: 'js/entries/production',
@@ -27,9 +27,8 @@ module.exports = merge(config, {
       }
     ]),
     // Avoid publishing files when compilation fails
-    new webpack.NoErrorsPlugin(),
+    new webpack.NoEmitOnErrorsPlugin(),
     new webpack.DefinePlugin(GLOBALS),
-    new webpack.optimize.DedupePlugin(),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
         warnings: false,
@@ -41,8 +40,7 @@ module.exports = merge(config, {
       sourceMap: false
     }),
     new webpack.LoaderOptionsPlugin({
-      minimize: true,
-      debug: false
+      minimize: true
     }),
     new ExtractTextPlugin({
       filename: 'css/app.css',
@@ -51,7 +49,7 @@ module.exports = merge(config, {
   ],
   module: {
     noParse: /\.min\.js$/,
-    loaders: [
+    rules: [
       // Sass
       {
         test: /\.scss$/,
@@ -59,12 +57,21 @@ module.exports = merge(config, {
           path.resolve(__dirname, '../src/js'),
           path.resolve(__dirname, '../src/assets/styles'),
         ],
-        loader: ExtractTextPlugin.extract({
-          fallbackLoader: 'style',
-          loader: [
-            { loader: 'css', query: { sourceMap: true } },
-            'postcss',
-            { loader: 'sass', query: { outputStyle: 'compressed' } }
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            { loader: 'css-loader', options: { sourceMap: true } },
+            {
+              loader: 'postcss-loader',
+              options: {
+                plugins: [
+                  autoprefixer({
+                    browsers: ['last 2 versions']
+                  })
+                ]
+              }
+            },
+            { loader: 'sass-loader', options: { outputStyle: 'compressed' } }
           ]
         })
       },
@@ -92,8 +99,20 @@ module.exports = merge(config, {
       {
         test: /\.css$/,
         loader: ExtractTextPlugin.extract({
-          fallbackLoader: 'style',
-          loader: ['css', 'postcss']
+          fallback: 'style-loader',
+          use: [
+            'css-loader',
+            {
+              loader: 'postcss-loader',
+              options: {
+                plugins: [
+                  autoprefixer({
+                    browsers: ['last 2 versions']
+                  })
+                ]
+              }
+            }
+          ]
         })
       }
     ]

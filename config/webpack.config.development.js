@@ -2,7 +2,7 @@ const merge = require('webpack-merge');
 const webpack = require('webpack');
 const config = require('./webpack.config.base');
 const path = require('path');
-
+const autoprefixer = require('autoprefixer');
 
 const GLOBALS = {
   'process.env': {
@@ -12,7 +12,6 @@ const GLOBALS = {
 };
 
 module.exports = merge(config, {
-  debug: true,
   cache: true,
   devtool: 'cheap-module-eval-source-map',
   entry: {
@@ -28,7 +27,7 @@ module.exports = merge(config, {
     new webpack.DefinePlugin(GLOBALS)
   ],
   module: {
-    loaders: [
+    rules: [
       // Sass
       {
         test: /\.scss$/,
@@ -36,11 +35,20 @@ module.exports = merge(config, {
           path.resolve(__dirname, '../src/js'),
           path.resolve(__dirname, '../src/assets/styles'),
         ],
-        loaders: [
-          'style',
-          'css',
-          'postcss',
-          { loader: 'sass', query: { outputStyle: 'expanded' } }
+        use: [
+          'style-loader',
+          'css-loader',
+          {
+            loader: 'postcss-loader',
+            options: {
+              plugins: [
+                autoprefixer({
+                  browsers: ['last 2 versions']
+                })
+              ]
+            }
+          },
+          { loader: 'sass-loader', options: { outputStyle: 'expanded' } }
         ]
       },
       // Sass + CSS Modules
@@ -64,7 +72,11 @@ module.exports = merge(config, {
       // CSS
       {
         test: /\.css$/,
-        loader: 'style!css!postcss'
+        use: [
+          'style-loader',
+          'css-loader',
+          'postcss-loader'
+        ]
       }
     ]
   }

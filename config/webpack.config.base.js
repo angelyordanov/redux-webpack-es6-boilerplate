@@ -2,7 +2,6 @@
 
 const path = require('path');
 const webpack = require('webpack');
-const autoprefixer = require('autoprefixer');
 
 module.exports = {
   output: {
@@ -30,19 +29,19 @@ module.exports = {
     })
   ],
   module: {
-    loaders: [
+    rules: [
       // JavaScript / ES6
       {
         test: /\.jsx?$/,
         include: path.resolve(__dirname, '../src/js'),
-        loader: 'babel'
+        loader: 'babel-loader'
       },
       // Images
       // Inline base64 URLs for <=8k images, direct URLs for the rest
       {
         test: /\.(png|jpg|jpeg|gif|svg)$/,
-        loader: 'url',
-        query: {
+        loader: 'url-loader',
+        options: {
           limit: 8192,
           name: 'images/[name].[ext]?[hash]'
         }
@@ -50,19 +49,12 @@ module.exports = {
       // Fonts
       {
         test: /\.(woff|woff2|ttf|eot)(\?v=\d+\.\d+\.\d+)?$/,
-        loader: 'url',
-        query: {
+        loader: 'url-loader',
+        options: {
           limit: 8192,
           name: 'fonts/[name].[ext]?[hash]'
         }
       }
     ]
-  },
-  postcss: function () {
-    return [
-      autoprefixer({
-        browsers: ['last 2 versions']
-      })
-    ];
   }
 };
