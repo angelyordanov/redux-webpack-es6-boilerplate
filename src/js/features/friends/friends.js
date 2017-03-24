@@ -1,8 +1,6 @@
 import { createStructuredSelector } from 'reselect';
 import assign from 'lodash/assign';
 
-import { State } from 'models/friends';
-
 // Action Types
 
 // Define types in the form of 'npm-module-or-myapp/feature-name/ACTION_TYPE_NAME'
@@ -16,7 +14,7 @@ export const NAME = 'friends';
 
 // Define the initial state for `friends` module
 
-const initialState: State = {
+const initialState = {
   friends: [0, 1, 2, 3, 4],
   friendsById: [
     {
@@ -44,19 +42,7 @@ const initialState: State = {
 
 // Reducer
 
-/**
- * Another clever approach of writing reducers:
- *
- * export default function(state = initialState, action) {
- *   const actions = {
- *      [ACTION_TYPE]: () => [action.payload.data, ...state]
- *   };
- *
- *   return (_.isFunction(actions[action.type])) ? actions[action.type]() : state
- * }
- */
-
-export default function reducer(state: State = initialState, action: any = {}): State {
+export default function reducer(state = initialState, action) {
   switch (action.type) {
     case ADD_FRIEND: {
       const len = state.friends.length ? state.friends.length : 1;
@@ -102,7 +88,7 @@ export default function reducer(state: State = initialState, action: any = {}): 
 
 // Action Creators
 
-function addFriend(name: string) {
+function addFriend(name) {
   return {
     type: ADD_FRIEND,
     name
@@ -116,14 +102,14 @@ function addFriend(name: string) {
 //   name
 // });
 
-function deleteFriend(id: number) {
+function deleteFriend(id) {
   return {
     type: DELETE_FRIEND,
     id
   };
 }
 
-function starFriend(id: number) {
+function starFriend(id) {
   return {
     type: STAR_FRIEND,
     id

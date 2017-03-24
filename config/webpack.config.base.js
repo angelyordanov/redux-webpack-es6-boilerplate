@@ -11,14 +11,10 @@ module.exports = {
     publicPath: '/'
   },
   resolve: {
-    modules: [
-      path.join(__dirname, '../src/client/scripts'),
-      path.join(__dirname, '../src/client/assets'),
-      path.join(__dirname, '../src/client/assets/javascripts'),
-      'node_modules'
-    ],
+    modules: ['node_modules'],
     alias: {
-      models: path.join(__dirname, '../src/client/assets/javascripts/models')
+      js: path.join(__dirname, '../src/js'),
+      assets: path.join(__dirname, '../src/assets')
     },
     extensions: ['.js', '.jsx', '.json', '.scss']
   },
@@ -38,7 +34,7 @@ module.exports = {
       // JavaScript / ES6
       {
         test: /\.jsx?$/,
-        include: path.resolve(__dirname, '../src/client/assets/javascripts'),
+        include: path.resolve(__dirname, '../src/js'),
         loader: 'babel'
       },
       // Images

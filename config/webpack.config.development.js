@@ -19,7 +19,7 @@ module.exports = merge(config, {
     application: [
       'webpack-hot-middleware/client',
       'react-hot-loader/patch',
-      'development'
+      'js/entries/development'
     ],
     vendor: ['react', 'react-dom', 'react-redux', 'react-router', 'react-router-redux', 'redux']
   },
@@ -33,9 +33,8 @@ module.exports = merge(config, {
       {
         test: /\.scss$/,
         include: [
-          path.resolve(__dirname, '../src/client/assets/javascripts'),
-          path.resolve(__dirname, '../src/client/assets/styles'),
-          path.resolve(__dirname, '../src/client/scripts')
+          path.resolve(__dirname, '../src/js'),
+          path.resolve(__dirname, '../src/assets/styles'),
         ],
         loaders: [
           'style',
