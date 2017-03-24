@@ -65,6 +65,7 @@ module.exports = {
     "react/prefer-es6-class": "warn",
     "react/self-closing-comp": "warn",
     "react/sort-comp": "warn",
-    "react/sort-prop-types": "warn"
+    "react/sort-prop-types": "warn",
+    "react/prop-types": "off"
   }
 };

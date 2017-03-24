@@ -1,13 +1,8 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 
 import './AddFriendInput.scss';
 
 export default class AddFriendInput extends Component {
-  static propTypes = {
-    addFriend: PropTypes.func.isRequired,
-    name: PropTypes.string
-  };
-
   constructor(props, context) {
     super(props, context);
 

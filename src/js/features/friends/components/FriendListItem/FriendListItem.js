@@ -1,17 +1,9 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import classnames from 'classnames';
 
 import './FriendListItem.scss';
 
 export default class FriendListItem extends Component {
-  static propTypes = {
-    deleteFriend: PropTypes.func.isRequired,
-    id: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
-    starFriend: PropTypes.func.isRequired,
-    starred: PropTypes.bool
-  };
-
   render() {
     return (
       <li className="friendListItem">
