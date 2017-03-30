@@ -22,19 +22,22 @@ function log() {
   console.log.apply(console, arguments);
 }
 
-app.use(webpackDevMiddleware(compiler, {
+const devMiddleware = webpackDevMiddleware(compiler, {
   noInfo: true,
   publicPath: config.output.publicPath,
   stats: {
     colors: true
   },
   historyApiFallback: true
-}));
+});
+
+app.use(devMiddleware);
 
 app.use(webpackHotMiddleware(compiler));
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, './src/index.html'));
+app.get('*', (req, res, next) => {
+  req.url = '/index.html';
+  devMiddleware(req, res, next);
 });
 
 app.listen(port, host, (err) => {

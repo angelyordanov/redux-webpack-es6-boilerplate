@@ -13,12 +13,18 @@
     crossorigin="anonymous"
   >
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+  <% for (var css in htmlWebpackPlugin.files.chunks['application'].css) { %>
+    <link href="<%= htmlWebpackPlugin.files.chunks['application'].css[css] %>" rel="stylesheet"><% } %>
 </head>
 <body>
+  <script>
+    window.__INITIAL_STATE__ = {};
+  </script>
 
-<div id="app"></div>
+  <div id="app"></div>
 
-<script src="/js/vendor.bundle.js"></script>
-<script src="/js/application.js"></script>
+  <script src="<%= htmlWebpackPlugin.files.chunks['vendor'].entry %>"></script>
+  <script src="<%= htmlWebpackPlugin.files.chunks['application'].entry %>"></script>
 </body>
 </html>

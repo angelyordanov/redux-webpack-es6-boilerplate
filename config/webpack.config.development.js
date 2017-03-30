@@ -1,8 +1,6 @@
 const merge = require('webpack-merge');
 const webpack = require('webpack');
 const config = require('./webpack.config.base');
-const path = require('path');
-const autoprefixer = require('autoprefixer');
 
 const GLOBALS = {
   'process.env': {
@@ -19,7 +17,7 @@ module.exports = merge(config, {
       'webpack-hot-middleware/client',
       'react-hot-loader/patch',
       'babel-polyfill',
-      'js/entries/development'
+      'client/js/entries/development'
     ],
     vendor: ['react', 'react-dom', 'react-redux', 'react-router', 'react-router-redux', 'redux']
   },
@@ -27,58 +25,4 @@ module.exports = merge(config, {
     new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin(GLOBALS)
   ],
-  module: {
-    rules: [
-      // Sass
-      {
-        test: /\.scss$/,
-        include: [
-          path.resolve(__dirname, '../src/js'),
-          path.resolve(__dirname, '../src/assets/styles'),
-        ],
-        use: [
-          'style-loader',
-          'css-loader',
-          {
-            loader: 'postcss-loader',
-            options: {
-              plugins: [
-                autoprefixer({
-                  browsers: ['last 2 versions']
-                })
-              ]
-            }
-          },
-          { loader: 'sass-loader', options: { outputStyle: 'expanded' } }
-        ]
-      },
-      // Sass + CSS Modules
-      // {
-      //   test: /\.scss$/,
-      //   include: /src\/client\/assets\/javascripts/,
-      //   loaders: [
-      //     'style',
-      //     {
-      //       loader: 'css',
-      //       query: {
-      //         modules: true,
-      //         importLoaders: 1,
-      //         localIdentName: '[path][name]__[local]--[hash:base64:5]'
-      //       }
-      //     },
-      //     'postcss',
-      //     { loader: 'sass', query: { outputStyle: 'expanded' } }
-      //   ]
-      // },
-      // CSS
-      {
-        test: /\.css$/,
-        use: [
-          'style-loader',
-          'css-loader',
-          'postcss-loader'
-        ]
-      }
-    ]
-  }
 });

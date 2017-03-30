@@ -8,7 +8,7 @@ import Redbox from 'redbox-react';
 import Root from './Root';
 import configureStore from './store/configureStore';
 
-import 'assets/styles/styles.scss';
+import 'client/assets/styles/styles.scss';
 
 const store = configureStore();
 const history = syncHistoryWithStore(browserHistory, store);

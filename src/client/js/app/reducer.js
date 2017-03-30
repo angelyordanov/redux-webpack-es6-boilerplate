@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import { routerReducer as routing } from 'react-router-redux';
 
-import friends, { NAME as friendsName } from 'js/features/friends';
+import friends, { NAME as friendsName } from 'client/js/features/friends';
 
 export default combineReducers({
   routing,

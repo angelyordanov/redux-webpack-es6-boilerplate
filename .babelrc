@@ -6,7 +6,12 @@
   "plugins": [
     "transform-runtime",
     "react-hot-loader/babel",
-    "transform-object-rest-spread"
+    
+    //object rest spread plugins
+    //https://babeljs.io/docs/plugins/transform-object-rest-spread/
+    "transform-es2015-destructuring",
+    "transform-object-rest-spread",
+    "syntax-object-rest-spread"
   ],
   "env": {
     "production": {

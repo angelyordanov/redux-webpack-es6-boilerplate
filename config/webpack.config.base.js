@@ -2,18 +2,28 @@
 
 const path = require('path');
 const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const autoprefixer = require('autoprefixer');
+const postcssLoaderOptions = {
+  plugins: [
+    autoprefixer({
+      browsers: ['last 2 versions']
+    })
+  ]
+};
 
 module.exports = {
   output: {
-    filename: 'js/[name].js',
-    path: path.resolve(__dirname, '../build/client'),
+    filename: 'js/[name].[chunkhash].js',
+    path: path.resolve(__dirname, '../build'),
     publicPath: '/'
   },
   resolve: {
     modules: ['node_modules'],
     alias: {
-      js: path.join(__dirname, '../src/js'),
-      assets: path.join(__dirname, '../src/assets')
+      client: path.join(__dirname, '../src/client'),
+      server: path.join(__dirname, '../src/server')
     },
     extensions: ['.js', '.jsx', '.json', '.scss']
   },
@@ -24,16 +34,22 @@ module.exports = {
     // Shared code
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
-      filename: 'js/vendor.bundle.js',
+      filename: 'js/[name].[hash].js',
       minChunks: Infinity
-    })
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'index.html',
+      template: 'src/client/index.html',
+      inject: false,
+    }),
+    new ExtractTextPlugin({ filename: 'css/[name].[contenthash].css' }),
   ],
   module: {
     rules: [
       // JavaScript / ES6
       {
         test: /\.jsx?$/,
-        include: path.resolve(__dirname, '../src/js'),
+        include: path.resolve(__dirname, '../src'),
         loader: 'babel-loader'
       },
       // Images
@@ -54,6 +70,38 @@ module.exports = {
           limit: 8192,
           name: 'fonts/[name].[ext]?[hash]'
         }
+      },
+      {
+        test: /\.scss$/,
+        include: [
+          path.resolve(__dirname, '../src/client/js'),
+          path.resolve(__dirname, '../src/client/assets/styles'),
+        ],
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            { loader: 'css-loader', options: { sourceMap: true } },
+            {
+              loader: 'postcss-loader',
+              options: postcssLoaderOptions,
+            },
+            { loader: 'sass-loader', options: { outputStyle: 'compressed' } }
+          ]
+        })
+      },
+      // CSS
+      {
+        test: /\.css$/,
+        loader: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            'css-loader',
+            {
+              loader: 'postcss-loader',
+              options: postcssLoaderOptions,
+            }
+          ]
+        })
       }
     ]
   }
