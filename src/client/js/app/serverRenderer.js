@@ -38,9 +38,11 @@ export function createServerRenderer(htmlTemplate) {
 
         try {
           const appHtml = ReactDOMServer.renderToString(
-            <Provider store={store}>
-              <RouterContext {...renderProps} />
-            </Provider>);
+            <div>{/* WORKAROUND! wrap in a div to match with client app's Root element*/}
+              <Provider store={store}>
+                <RouterContext {...renderProps} />
+              </Provider>
+            </div>);
 
           const initialState = store.getState();
 
