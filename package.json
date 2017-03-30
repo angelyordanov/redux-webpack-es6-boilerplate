@@ -38,6 +38,7 @@
     "tunnel": "lt --port 3000"
   },
   "devDependencies": {
+    "autoprefixer": "6.4.1",
     "babel-cli": "6.14.0",
     "babel-core": "6.14.0",
     "babel-eslint": "6.1.2",
@@ -84,7 +85,6 @@
     "webpack-node-externals": "1.5.4"
   },
   "dependencies": {
-    "autoprefixer": "6.4.1",
     "babel-polyfill": "6.23.0",
     "babel-runtime": "6.11.6",
     "classnames": "2.2.5",
